@@ -47,22 +47,6 @@ exports.signin = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
-        // create a token
-        // let payload = {
-        //     user: {
-        //         id: user.id,
-        //         name: user.name
-        //     }
-        // };
-        // jwt.sign(payload, process.env.JWT_SECRET_KEY, (err, token) => {
-        //     if (err) throw err;
-        //     res.status(200).json({
-        //         msg: 'Login is Success',
-        //         token: token
-        //     });
-        // });
-
-
         if (user.email && user.password) {
             const { _id, name, email, isAdmin, createdAt } = user;
             return res.status(200).json({

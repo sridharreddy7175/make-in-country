@@ -28,8 +28,10 @@ app.get("/", (req, res) => {
 
 var userRoutes = require("./routes/user");
 app.use("/api", userRoutes);
-// var addContactRoutes = require('./routes/addContact')
-// app.use('/api', addContactRoutes)
+var appRoutes = require('./routes/app')
+app.use('/api', appRoutes)
+const categoryRoutes = require("./routes/category");
+app.use("/api", categoryRoutes);
 
 
 //PORT

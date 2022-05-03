@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { SigninUser } from "../../redux/users/user_action";
 
 
-let Signin = () => {
+
+let Signin = (props) => {
     let history = useHistory();
 
     let [userState, setUserState] = useState({
@@ -39,10 +42,17 @@ let Signin = () => {
             : setUserErrorState({ ...userErrorState, passwordError: "" });
     };
 
-    let submitLogin = (event) => {
+    let submitLogin = async (event) => {
         event.preventDefault();
-
+        await props.SigninUser(userState);
+        history.push('/')
+        setUserState({
+            ...userState,
+            email: "",
+            password: ""
+        })
     };
+
 
     return (
         <React.Fragment>
@@ -134,4 +144,10 @@ let Signin = () => {
         </React.Fragment>
     );
 };
-export default Signin;
+export default connect(
+    (state) => ({
+        details: state.user,
+    }),
+
+    { SigninUser }
+)(Signin);

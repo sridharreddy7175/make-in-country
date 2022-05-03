@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import Axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let Signup = () => {
     let history = useHistory();
+    toast.configure();
 
     let [userState, setUserState] = useState({
         name: "",
@@ -54,6 +58,28 @@ let Signup = () => {
 
     let submitRegister = (event) => {
         event.preventDefault();
+        let data = {
+            userState,
+        };
+        console.log("data", data);
+
+        Axios.post("http://localhost:8000/api/signup", userState)
+            .then((res) => {
+                console.log("res", res.data.msg);
+
+                toast(res.data.msg);
+                history.push("/signin");
+            })
+            .catch((err) => {
+                console.log("err", err.response.data.errors[0].msg);
+                toast.error(err.response.data.errors[0].msg);
+            });
+        setUserState({
+            ...userState,
+            name: "",
+            email: "",
+            password: "",
+        });
     };
 
     return (
@@ -144,6 +170,7 @@ let Signup = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-dark btn-sm text-brown form-control w-25"
+                                                    onClick={submitRegister}
                                                 >
                                                     Signup
                                                 </button>

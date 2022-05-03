@@ -1,4 +1,5 @@
 import React from "react";
+import GetApps from "../admin/GetApps";
 
 const Home = () => {
     return (
@@ -36,6 +37,7 @@ const Home = () => {
                     </h3>
                 </div>
             </div>
+            <GetApps />
         </div>
     );
 };

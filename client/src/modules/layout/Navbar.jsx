@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { signoutUser } from "../../redux/users/user_action";
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const history = useHistory();
+    const signout = () => {
+        props.signoutUser();
+        history.push("/");
+    };
     return (
         <div>
             <nav
@@ -27,39 +34,83 @@ const Navbar = () => {
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link className="nav-link text-white" to="/">
-                                    Home <span className="sr-only">(current)</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-white" to="/apps">
-                                    AppsList
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-white" to="/about">
-                                    About
-                                </Link>
-                            </li>
-                        </ul>
+                        {props?.details?.msg === "Login is Success" ? (
+                            <ul className="navbar-nav ml-auto">
+                                {props?.details?.user?.isAdmin === true ? (
+                                    <ul className="navbar-nav ml-auto">
+                                        <li className="nav-item">
+                                            <Link
+                                                className="nav-link text-white"
+                                                to="/admin/dashboard"
+                                            >
+                                                AdminDashboard
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                ) : (
+                                    <ul className="navbar-nav ml-auto">
+                                        <li className="nav-item active">
+                                            <Link className="nav-link text-white" to="/">
+                                                Home <span className="sr-only">(current)</span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link text-white" to="/apps">
+                                                AppsList
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link text-white" to="/about">
+                                                About
+                                            </Link>
+                                        </li>
 
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active">
-                                <input
-                                    className="form-control mr-sm-2"
-                                    type="search"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                />
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-white" to="/signup">
-                                    Signup
-                                </Link>
-                            </li>
-                        </ul>
+                                        <li className="nav-item">
+                                            <Link
+                                                className="nav-link text-white"
+                                                to="/user/dashboard"
+                                            >
+                                                UserDashboard
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                )}
+                                <li className="nav-item">
+                                    <Link
+                                        className="nav-link text-white"
+                                        to="/signup"
+                                        onClick={signout}
+                                    >
+                                        SignOut
+                                    </Link>
+                                </li>
+                            </ul>
+                        ) : (
+                            <ul className="navbar-nav ml-auto">
+                                <li className="nav-item active">
+                                    <Link className="nav-link text-white" to="/">
+                                        Home <span className="sr-only">(current)</span>
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link text-white" to="/apps">
+                                        AppsList
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link text-white" to="/about">
+                                        About
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link text-white" to="/signup">
+                                        Signup
+                                    </Link>
+                                </li>
+
+
+                            </ul>
+                        )}
                     </div>
                 </div>
             </nav>
@@ -67,4 +118,10 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default connect(
+    (state) => ({
+        details: state.user.user,
+    }),
+
+    { signoutUser }
+)(Navbar);

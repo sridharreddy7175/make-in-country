@@ -1,6 +1,26 @@
-import React from "react";
+import Axios from "axios";
+import React, { useEffect, useState } from "react";
+
 
 const Apps = () => {
+
+    const [categories, setCategories] = useState([]);
+    const getCategories = async () => {
+        try {
+            const data = await Axios.get("http://localhost:8000/api/categories");
+            console.log("data", data.data)
+            setCategories(data.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const renderingCard = () => {
+
+    }
     return (
         <div>
             <h1 className="mt-5 text-center">Welcome to the Apps</h1>

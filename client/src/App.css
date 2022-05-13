@@ -40,3 +40,32 @@
 .ud1 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+
+.card {
+  font-weight: 400;
+  border: 0;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.card-app {
+  font-weight: 400;
+  border: 0;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  border-radius: 20px;
+}
+.text-muted {
+  color: #6c757d !important;
+}
+
+.card-product {
+  font-weight: 400;
+  border: 0;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  width: 300px;
+}
+.Link {
+  text-decoration: none !important;
+  font-size: 18px;
+  font-weight: 400;
+  color: white !important;
+}

@@ -4,6 +4,7 @@ import { AiOutlineInstagram } from "react-icons/ai";
 import { AiFillLinkedin } from "react-icons/ai";
 import { AiFillGooglePlusCircle } from "react-icons/ai";
 import { BsWhatsapp } from "react-icons/bs";
+import Footer from "./Footer";
 
 const About = () => {
     return (
@@ -139,6 +140,7 @@ const About = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

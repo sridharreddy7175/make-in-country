@@ -1,9 +1,12 @@
 import React from "react";
-import GetApps from "../admin/GetApps";
+import Apps from "../apps/Apps";
+import Products from "../products/Products";
+import Services from "../services/Services";
+import Footer from "./Footer";
 
 const Home = () => {
     return (
-        <div className="mt-5 mb-3">
+        <div className="mt-5">
             <div className="text-center">
                 <div className="rounded p-2 d-flex justify-content-center">
                     <h1
@@ -16,7 +19,7 @@ const Home = () => {
                         Welcome to Make In Country
                     </h1>
                 </div>
-                <div class="d-flex justify-content-center mt-3">
+                <div className="d-flex justify-content-center mt-3">
                     <h2
                         className="mr-3 p-2 rounded text-white"
                         style={{ background: "#4EC3F7", fontFamily: "cursive" }}
@@ -37,7 +40,10 @@ const Home = () => {
                     </h3>
                 </div>
             </div>
-            <GetApps />
+            <Apps />
+            <Products />
+            <Services />
+            <Footer />
         </div>
     );
 };

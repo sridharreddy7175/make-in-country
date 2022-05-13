@@ -1,16 +1,21 @@
 import Axios from "axios";
-import e from "express";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Footer from "../layout/Footer";
+import Apps from "./Apps";
+import OtherApps from "./OtherApps";
 
-const Apps = () => {
+const AppsCategory = () => {
     const [apps, setApps] = useState([]);
-    let [filteredData, setFiletredData] = useState([]);
+    const categoryName = window.location.pathname.slice(9);
+    const categoryCountry = window.location.pathname.slice(9);
+
+
+    console.log("23333", categoryName)
+
+
     const [categories, setCategories] = useState([]);
-    const [category, setCategory] = useState("")
-    const [country, setCountry] = useState("")
-    const [downloads, setDownloads] = useState("")
-    const [ratings, setRatings] = useState("")
+
 
     const getCategories = async () => {
         try {
@@ -25,13 +30,11 @@ const Apps = () => {
     useEffect(() => {
         getCategories();
     }, []);
-    // console.log("hdhdhhd", filteredData)
+
     const getApps = async () => {
         try {
             const data = await Axios.get("http://localhost:8000/api/apps");
-            // console.log("data", data.data);
             setApps(data.data);
-            setFiletredData(data.data);
         } catch (err) {
             console.log(err);
         }
@@ -56,43 +59,13 @@ const Apps = () => {
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
 
-    const filteredItem = async (category, type) => {
-        console.log("e", category, type)
-
-        // console.log("cat", category, "coun", country, "ratings", ratings, "down", downloads)
-        // console.log("target", e.target.value, "data", type)
-        // // let checkValue = data.country  // default to country
-        // const result = apps.filter((a) => {
-        //     // console.log("a", a);
-
-        //     console.log("category", a.category.name)
-        //     return (e === a.category.name)
-        // });
-        //console.log("result", result)
-        // setFiletredData(result);
-        // // return result
-
-
-
-
+    const filteredItem = () => {
+        const result = apps.filter((a) => {
+            console.log("a", a.category.name);
+            return categoryName === a.category.name;
+        });
+        return result
     };
-    useEffect(() => {
-        console.log("cat", category, "coun", country, "ratings", ratings, "down", downloads)
-        // filteredItem(category, "category")
-    }, [category])
-
-    // useEffect(() => {
-    //     console.log("cat", category, "coun", country, "ratings", ratings, "down", downloads)
-
-    // }, [country])
-    // useEffect(() => {
-    //     console.log("cat", category, "coun", country, "ratings", ratings, "down", downloads)
-
-    // }, [ratings])
-    // useEffect(() => {
-    //     console.log("cat", category, "coun", country, "ratings", ratings, "down", downloads)
-
-    // }, [downloads])
 
     return (
         <div>
@@ -101,59 +74,57 @@ const Apps = () => {
                     <div className="row p-0 m-0">
                         <div className="col-md-4 d-flex align-content-center">
                             <p className=" h5 ml-4 my-auto text-md-left text-lg-left text-center text-primary">
-                                Apps
+                                {categoryName}
                             </p>
                         </div>
                         <div className="col-md-8 text-md-right text-center m-auto">
+                            {
+                                categoryName ?
+
+                                    <select
+                                        className="border border-primary rounded-pill p-1 mr-2"
+                                        style={{ outline: "none" }}
+                                    >
+                                        <option value="">Country</option>
+
+                                        {apps &&
+                                            filteredCountry.map((cate, index) => {
+                                                return (
+                                                    <option key={index} value={cate._id}>
+                                                        {cate.country}
+                                                    </option>
+                                                );
+                                            })}
+                                    </select>
+                                    :
+                                    <select
+                                        className="border border-primary rounded-pill p-1 mr-2"
+                                        style={{ outline: "none" }}
+                                        onClick={filteredItem}
+                                    >
+                                        <option value="">Category</option>
+                                        {categories &&
+                                            categories.map((cate, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={cate._id}
+
+                                                >
+                                                    {cate.name}
+                                                </option>
+                                            ))}
+                                    </select>
+                            }
+
+
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                                onClick={async (e) => {
-                                    await setCategory(e.target.value)
-                                    // filteredItem(e, "category")
-                                }}
-                            >
-                                <option value="">Category</option>
-                                {apps &&
-                                    apps.map((cate, index) => (
-                                        <option key={index} value={cate.name}>
-                                            {cate?.name}
-                                        </option>
-                                    ))}
-                            </select>
-                            <select
-                                className="border border-primary rounded-pill p-1 mr-2"
-                                style={{ outline: "none" }}
-                                onClick={async (e) => {
-                                    await setCountry(e.target.value)
-                                    // filteredItem(e, "country")
-                                }}
-                            >
-                                <option value="">Country</option>
-
-                                {apps &&
-                                    filteredCountry.map((cate, index) => {
-                                        return (
-                                            <option key={index} value={cate.country}>
-                                                {cate.country}
-                                            </option>
-                                        );
-                                    })}
-                            </select>
-
-                            <select
-                                className="border border-primary rounded-pill p-1 mr-2"
-                                style={{ outline: "none" }}
-                                onClick={async (e) => {
-                                    await setDownloads(e.target.value)
-                                    // filteredItem(e, "downloads")
-                                }}
-
                             >
                                 <option value="">Downloads</option>
                                 {apps &&
                                     filteredDownloads.map((cate, index) => (
-                                        <option key={index} value={cate.downloads}>
+                                        <option key={index} value={cate._id}>
                                             {cate.downloads}
                                         </option>
                                     ))}
@@ -161,16 +132,11 @@ const Apps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                                onClick={async (e) => {
-                                    await setRatings(e.target.value)
-                                    // filteredItem(e, "ratings")
-                                }}
-
                             >
                                 <option value="">Ratings</option>
                                 {apps &&
                                     filteredRatings.map((cate, index) => (
-                                        <option key={index} value={cate.ratings}>
+                                        <option key={index} value={cate._id}>
                                             {cate.ratings}
                                         </option>
                                     ))}
@@ -178,15 +144,12 @@ const Apps = () => {
                         </div>
                         <div className="container-fluid">
                             <div className="row p-0 mx-md-4 mb-md-4 mt-3">
-                                {filteredData?.length > 0 ? (
-                                    filteredData?.map((a) => {
-                                        let categoryName = a.category.name;
-                                        let country = a.country;
+                                {apps?.map((a) => {
+                                    console.log("a", a.category.name)
+                                    return (
 
-                                        return (
-
-                                            < div className="col-6 px-0 mx-0 col-md-auto" key={a._id} >
-
+                                        categoryName === a.category.name || categoryName === a.country ?
+                                            <div className="col-6 px-0 mx-0 col-md-auto" key={a._id}>
                                                 <div
                                                     className="card p-1 my-2 mx-2 mx-md-2  mx-xl-2 mx-lg-2"
                                                     style={{
@@ -236,12 +199,12 @@ const Apps = () => {
                                                                 <Link to={`/app/${a._id}`}>{a.name}</Link>
                                                             </div>
                                                             <div className="card-body w-100 p-1 d-flex mx-auto justify-content-around">
-                                                                <Link to={`/apps/by/${country}`}>
+                                                                <Link to={`/app/${a._id}`}>
                                                                     <p className="btn my-auto px-1 py-0 btn-sm text-muted shadow-none border rounded-pill mr-1">
                                                                         {a.country}
                                                                     </p>
                                                                 </Link>
-                                                                <Link to={`/apps/by/${categoryName}`}>
+                                                                <Link to="">
                                                                     <p className=" btn btn-sm py-0 px-1 shadow-none text-muted border rounded-pill my-auto  ">
                                                                         {a.category.name}
                                                                     </p>
@@ -251,20 +214,18 @@ const Apps = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        );
-                                    })
-                                ) : (
-                                    <h5 className="mt-5 text-center" style={{ margin: "auto" }}>
-                                        No Results Found
-                                    </h5>
-                                )}
+                                            : null
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div >
+            <OtherApps />
+            <Footer />
+        </div>
     );
 };
 
-export default Apps;
+export default AppsCategory;

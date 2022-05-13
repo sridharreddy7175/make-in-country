@@ -37,7 +37,7 @@ const UpdateApps = (props) => {
 
 
 
-    const getProduct = async () => {
+    const getApp = async () => {
         try {
             var resProducts = await fetch(`http://localhost:8000/api/app/${id}`);
             var response = await resProducts.json();
@@ -64,7 +64,7 @@ const UpdateApps = (props) => {
         }
     };
     useEffect(() => {
-        getProduct();
+        getApp();
     }, []);
     const handlePhoto = (e) => {
         let reader = new FileReader();

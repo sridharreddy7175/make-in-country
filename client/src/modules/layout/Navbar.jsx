@@ -18,7 +18,7 @@ const Navbar = (props) => {
                 }}
             >
                 <div className="container">
-                    <Link className="navbar-brand text-white" to="#">
+                    <Link className="navbar-brand text-white" to="/">
                         App Manager
                     </Link>
                     <button

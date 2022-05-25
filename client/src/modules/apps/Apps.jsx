@@ -232,10 +232,10 @@ const Apps = () => {
                     </div>
                 </div>
             </div>
-            <Games />
+            {/* <Games />
             <Payments />
             <Social />
-            <Entertainment />
+            <Entertainment /> */}
             <Footer />
 
         </div>

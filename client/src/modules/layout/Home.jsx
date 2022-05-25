@@ -1,5 +1,6 @@
 import React from "react";
 import Apps from "../apps/Apps";
+import HomeApps from "../apps/HomeApps";
 import Products from "../products/Products";
 import Services from "../services/Services";
 import Footer from "./Footer";
@@ -40,7 +41,7 @@ const Home = () => {
                     </h3>
                 </div>
             </div>
-            <Apps />
+            <HomeApps />
             <Products />
             <Services />
             <Footer />

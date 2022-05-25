@@ -26,7 +26,7 @@ const AppInformation = () => {
 
     const getApp = async () => {
         try {
-            var resProducts = await fetch(`http://localhost:8000/api/app/${id}`);
+            var resProducts = await fetch(`/api/app/${id}`);
             var response = await resProducts.json();
             console.log("response", response)
             setName(response?.name);

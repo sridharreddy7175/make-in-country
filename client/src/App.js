@@ -17,6 +17,7 @@ import UpdateApps from "./modules/admin/UpdateApps";
 import EditUserProfile from "./modules/users/EditUserProfile";
 import AppInformation from "./modules/apps/AppInformation";
 import AppsCategory from "./modules/apps/AppsCategory";
+import Contact from "./modules/layout/Contact";
 
 function App() {
 
@@ -49,7 +50,7 @@ function App() {
           <Route path={`/apps/by/${country}`}>
             <AppsCountry />
           </Route> */}
-          <Route exact path={`/apps/by/${categoryName}`}>
+          <Route exact path={`/apps/by/:id`}>
             <AppsCategory />
           </Route>
 
@@ -82,6 +83,9 @@ function App() {
           </Route>
           <Route path="/app/:id">
             <AppInformation />
+          </Route>
+          <Route path="/contact">
+            <Contact />
           </Route>
 
         </Switch>

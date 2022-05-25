@@ -24,7 +24,7 @@ const UpdateApps = (props) => {
     const { id } = useParams();
     const getCategories = async () => {
         try {
-            const data = await Axios.get("http://localhost:8000/api/categories");
+            const data = await Axios.get("/api/categories");
             console.log("data", data.data);
             setCategories(data.data);
         } catch (err) {
@@ -39,7 +39,7 @@ const UpdateApps = (props) => {
 
     const getApp = async () => {
         try {
-            var resProducts = await fetch(`http://localhost:8000/api/app/${id}`);
+            var resProducts = await fetch(`/api/app/${id}`);
             var response = await resProducts.json();
             console.log("res", response);
             setName(response.name);
@@ -126,7 +126,7 @@ const UpdateApps = (props) => {
         }
     };
 
-    const createProductForm = () => (
+    const updateProductForm = () => (
         <form>
             <div className="form-group pt-3">
                 <label className="btn btn-block btn-success">
@@ -288,7 +288,7 @@ const UpdateApps = (props) => {
                 onClick={onSubmit}
                 className="btn btn-outline-success mb-3"
             >
-                Create App
+                Update App
             </button>
         </form>
     );
@@ -304,7 +304,7 @@ const UpdateApps = (props) => {
                 <div className="row bg-dark text-white rounded">
                     <div className="col-md-8 offset-md-2">
                         {/* {successMessage()} */}
-                        {createProductForm()}
+                        {updateProductForm()}
                     </div>
                 </div>
             </div>

@@ -19,7 +19,7 @@ const CreateCategory = () => {
         };
         try {
             const data = await Axios.post(
-                "http://localhost:8000/api/category/create/",
+                "/api/category/create/",
                 body
             );
             console.log("data", data);

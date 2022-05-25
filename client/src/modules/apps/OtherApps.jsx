@@ -9,7 +9,7 @@ const OtherApps = () => {
 
     const getCategories = async () => {
         try {
-            const data = await Axios.get("http://localhost:8000/api/categories");
+            const data = await Axios.get("/api/categories");
             // console.log("data", data.data);
             // catData = data.data;
             setCategories(data.data);
@@ -22,7 +22,7 @@ const OtherApps = () => {
     }, []);
     const getApps = async () => {
         try {
-            const data = await Axios.get("http://localhost:8000/api/apps");
+            const data = await Axios.get("/api/apps");
             // console.log("data", data.data);
             setApps(data.data);
         } catch (err) {

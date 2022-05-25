@@ -8,7 +8,7 @@ const ManageApps = () => {
 
     const getApps = async () => {
         try {
-            const data = await Axios.get("http://localhost:8000/api/apps");
+            const data = await Axios.get("/api/apps");
             console.log("data", data);
             await setApps(data.data);
         } catch (err) {
@@ -22,7 +22,7 @@ const ManageApps = () => {
     let submitDelete = async (id) => {
         console.log("ccc", id);
         try {
-            const data = await Axios.delete(`http://localhost:8000/api/app/${id}`);
+            const data = await Axios.delete(`/api/app/${id}`);
             console.log("data", data);
             getApps();
         } catch (err) {

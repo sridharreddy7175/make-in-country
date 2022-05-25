@@ -7,7 +7,7 @@ const ManageCategories = () => {
     const [categories, setCategories] = useState([]);
     const getCategories = async () => {
         try {
-            const data = await Axios.get("http://localhost:8000/api/categories");
+            const data = await Axios.get("/api/categories");
             console.log("data", data.data)
             setCategories(data.data);
         } catch (err) {

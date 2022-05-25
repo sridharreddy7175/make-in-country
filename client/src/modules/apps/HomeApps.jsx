@@ -1,13 +1,9 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../layout/Footer";
 import Entertainment from "../topEntertainment/Entertainment";
-import Games from "../topGames/Games";
-import Payments from "../topPayments/Payments";
-import Social from "../topSocial/Social";
 
-const Apps = () => {
+const HomeApps = () => {
     const [apps, setApps] = useState([]);
     const [categories, setCategories] = useState([]);
 
@@ -232,14 +228,9 @@ const Apps = () => {
                     </div>
                 </div>
             </div>
-            <Games />
-            <Payments />
-            <Social />
-            <Entertainment />
-            <Footer />
 
         </div>
     );
 };
 
-export default Apps;
+export default HomeApps;

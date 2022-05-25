@@ -1,13 +1,8 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../layout/Footer";
-import Entertainment from "../topEntertainment/Entertainment";
-import Games from "../topGames/Games";
-import Payments from "../topPayments/Payments";
-import Social from "../topSocial/Social";
 
-const Apps = () => {
+const Payments = () => {
     const [apps, setApps] = useState([]);
     const [categories, setCategories] = useState([]);
 
@@ -77,25 +72,10 @@ const Apps = () => {
                     <div className="row p-0 m-0">
                         <div className="col-md-4 d-flex align-content-center">
                             <p className=" h5 ml-4 my-auto text-md-left text-lg-left text-center text-primary">
-                                Apps
+                                Top Payments
                             </p>
                         </div>
                         <div className="col-md-8 text-md-right text-center m-auto">
-                            <select
-                                className="border border-primary rounded-pill p-1 mr-2"
-                                style={{ outline: "none" }}
-                                onClick={async (e) => {
-                                    filteredItem(e.target.value);
-                                }}
-                            >
-                                <option value="">Category</option>
-                                {dupApps &&
-                                    filteredCategory.map((cate, index) => (
-                                        <option key={index} value={cate?.category.name}>
-                                            {cate?.category.name}
-                                        </option>
-                                    ))}
-                            </select>
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
@@ -150,76 +130,83 @@ const Apps = () => {
                             <div className="row p-0 mx-md-4 mb-md-4 mt-3">
                                 {apps?.length > 0 ? (
                                     apps?.map((a) => {
-                                        // console.log("datta", a)
                                         let categoryName = a.category.name;
                                         let country = a.country;
 
                                         return (
-                                            <div className="col-6 px-0 mx-0 col-md-auto" key={a._id}>
+                                            a.category.name === "Payment" && (
                                                 <div
-                                                    className="card p-1 my-2 mx-2 mx-md-2  mx-xl-2 mx-lg-2"
-                                                    style={{
-                                                        borderRadius: "20px",
-                                                        width: "150px",
-                                                        height: "150px",
-                                                    }}
+                                                    className="col-6 px-0 mx-0 col-md-auto"
+                                                    key={a._id}
                                                 >
-                                                    <div className="d-block">
-                                                        <div className=" px-1 text-center align-items-center">
-                                                            <Link to={`/app/${a._id}`}>
-                                                                <img
-                                                                    alt=""
-                                                                    className="rounded-circle my-auto"
-                                                                    height="60"
-                                                                    width="60"
-                                                                    src={`http://localhost:8000/api/app/photo/${a._id}`}
-                                                                    style={{ borderRadius: "20px" }}
-                                                                />
-                                                                <span
-                                                                    className=" position-absolute mt-1 font-weight-light text-overlay badge-pill badge-info px-1 py-0"
-                                                                    style={{
-                                                                        fontSize: "12px",
-                                                                        top: "0px",
-                                                                        left: "5px",
-                                                                    }}
-                                                                >
-                                                                    {a.downloads}
-                                                                </span>
-                                                                <span
-                                                                    className=" position-absolute mt-1 font-weight-light text-overlay badge-pill badge-info px-1 py-0"
-                                                                    style={{
-                                                                        fontSize: "12px",
-                                                                        top: "0px",
-                                                                        right: "5px",
-                                                                    }}
-                                                                >
-                                                                    {a.ratings}
-                                                                </span>
-                                                            </Link>
-                                                        </div>
-                                                        <div className="p-1 ">
-                                                            <div
-                                                                className="d-flex justify-content-around"
-                                                                style={{ fontWeight: "400", fontSize: "15px" }}
-                                                            >
-                                                                <Link to={`/app/${a._id}`}>{a.name}</Link>
+                                                    <div
+                                                        className="card p-1 my-2 mx-2 mx-md-2  mx-xl-2 mx-lg-2"
+                                                        style={{
+                                                            borderRadius: "20px",
+                                                            width: "150px",
+                                                            height: "150px",
+                                                        }}
+                                                    >
+                                                        <div className="d-block">
+                                                            <div className=" px-1 text-center align-items-center">
+                                                                <Link to={`/app/${a._id}`}>
+                                                                    <img
+                                                                        alt=""
+                                                                        className="rounded-circle my-auto"
+                                                                        height="60"
+                                                                        width="60"
+                                                                        src={`http://localhost:8000/api/app/photo/${a._id}`}
+                                                                        style={{ borderRadius: "20px" }}
+                                                                    />
+                                                                    <span
+                                                                        className=" position-absolute mt-1 font-weight-light text-overlay badge-pill badge-info px-1 py-0"
+                                                                        style={{
+                                                                            fontSize: "12px",
+                                                                            top: "0px",
+                                                                            left: "5px",
+                                                                        }}
+                                                                    >
+                                                                        {a.downloads}
+                                                                    </span>
+                                                                    <span
+                                                                        className=" position-absolute mt-1 font-weight-light text-overlay badge-pill badge-info px-1 py-0"
+                                                                        style={{
+                                                                            fontSize: "12px",
+                                                                            top: "0px",
+                                                                            right: "5px",
+                                                                        }}
+                                                                    >
+                                                                        {a.ratings}
+                                                                    </span>
+                                                                </Link>
                                                             </div>
-                                                            <div className="card-body w-100 p-1 d-flex mx-auto justify-content-around">
-                                                                <Link to={`/apps/by/${country}`}>
-                                                                    <p className="btn my-auto px-1 py-0 btn-sm text-muted shadow-none border rounded-pill mr-1">
-                                                                        {a.country}
-                                                                    </p>
-                                                                </Link>
-                                                                <Link to={`/apps/by/${categoryName}`}>
-                                                                    <p className=" btn btn-sm py-0 px-1 shadow-none text-muted border rounded-pill my-auto  ">
-                                                                        {a.category.name}
-                                                                    </p>
-                                                                </Link>
+                                                            <div className="p-1 ">
+                                                                <div
+                                                                    className="d-flex justify-content-around"
+                                                                    style={{
+                                                                        fontWeight: "400",
+                                                                        fontSize: "15px",
+                                                                    }}
+                                                                >
+                                                                    <Link to={`/app/${a._id}`}>{a.name}</Link>
+                                                                </div>
+                                                                <div className="card-body w-100 p-1 d-flex mx-auto justify-content-around">
+                                                                    <Link to={`/apps/by/${country}`}>
+                                                                        <p className="btn my-auto px-1 py-0 btn-sm text-muted shadow-none border rounded-pill mr-1">
+                                                                            {a.country}
+                                                                        </p>
+                                                                    </Link>
+                                                                    <Link to={`/apps/by/${categoryName}`}>
+                                                                        <p className=" btn btn-sm py-0 px-1 shadow-none text-muted border rounded-pill my-auto  ">
+                                                                            {a.category.name}
+                                                                        </p>
+                                                                    </Link>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            )
                                         );
                                     })
                                 ) : (
@@ -232,14 +219,8 @@ const Apps = () => {
                     </div>
                 </div>
             </div>
-            <Games />
-            <Payments />
-            <Social />
-            <Entertainment />
-            <Footer />
-
         </div>
     );
 };
 
-export default Apps;
+export default Payments;

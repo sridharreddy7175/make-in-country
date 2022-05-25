@@ -16,7 +16,7 @@ const UpdateCategory = () => {
 
     const getCategory = async () => {
         try {
-            var resProducts = await fetch(`http://localhost:8000/api/category/${id}`);
+            var resProducts = await fetch(`/api/category/${id}`);
             var response = await resProducts.json();
             console.log("res", response)
             setName(response.name);
@@ -36,7 +36,7 @@ const UpdateCategory = () => {
         };
         try {
             const data = await Axios.put(
-                `http://localhost:8000/api/category/${id}/`,
+                `/api/category/${id}/`,
                 body,
 
             );

@@ -24,7 +24,7 @@ const CreateApps = (props) => {
     const getCategories = async () => {
         try {
             const data = await Axios.get("http://localhost:8000/api/categories");
-            console.log("data", data.data);
+            // console.log("data", data.data);
             setCategories(data.data);
         } catch (err) {
             console.log(err);
@@ -68,7 +68,7 @@ const CreateApps = (props) => {
 
         try {
             const data = await Axios.post(
-                "http://localhost:8000/api/app/create",
+                "/api/app/create",
                 formData
             );
             console.log("data", data);

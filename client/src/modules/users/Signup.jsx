@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../layout/Footer";
 
 let Signup = () => {
     let history = useHistory();
@@ -63,7 +64,7 @@ let Signup = () => {
         };
         console.log("data", data);
 
-        Axios.post("http://localhost:8000/api/signup", userState)
+        Axios.post("/api/signup", userState)
             .then((res) => {
                 console.log("res", res.data.msg);
 
@@ -191,6 +192,8 @@ let Signup = () => {
                         </div>
                     </div>
                 </section>
+                <Footer />
+
             </React.Fragment>
         </React.Fragment>
     );

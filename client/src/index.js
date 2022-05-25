@@ -10,9 +10,6 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
-        <div>
-          <h1>hello</h1>
-        </div>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

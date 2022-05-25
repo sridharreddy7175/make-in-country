@@ -6,8 +6,8 @@ const GetApps = (props) => {
 
     const getApps = async () => {
         try {
-            const data = await Axios.get("http://localhost:8000/api/apps");
-            console.log("data", data);
+            const data = await Axios.get("/api/apps");
+            // console.log("data", data);
             await setApps(data.data)
         } catch (err) {
             console.log(err);

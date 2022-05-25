@@ -29,7 +29,7 @@ export const SigninUser = (user) => {
         };
         // console.log("ree", requestBody);
         try {
-            let dataURL = "http://localhost:8000/api/signin";
+            let dataURL = "/api/signin";
             let response = await axios.post(dataURL, requestBody);
             console.log("res", response.data.msg);
             dispatch({ type: SIGNIN_USER_SUCCESS, payload: response.data });

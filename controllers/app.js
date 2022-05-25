@@ -111,12 +111,13 @@ exports.updateApp = (req, res) => {
 exports.getAllApps = (req, res) => {
     let limit = req.query.limit ? parseInt(req.query.limit) : 8;
     let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+    // sort([[sortBy, "asc"]])
+    // .limit(limit)
 
     db.App.find()
         .select("-photo")
         .populate("category")
-        .sort([[sortBy, "asc"]])
-        .limit(limit)
+
         .exec((err, apps) => {
             if (err) {
                 return res.status(400).json({

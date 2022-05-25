@@ -10,14 +10,21 @@ app.use(bodyParser.json());
 
 app.use(cors());
 //DB Connection
+// mongoose
+//     .connect(process.env.DATABASE, {
+//         useUnifiedTopology: true,
+//         useNewUrlParser: true
+//     })
+//     .then(() => {
+//         console.log("DB CONNECTED");
+//     });
 mongoose
     .connect(process.env.DATABASE, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        // useCreateIndex: true
     })
-    .then(() => {
-        console.log("DB CONNECTED");
-    });
+    .then(() => console.log('MongoDB connected...'))
+    .catch(err => console.log(err));
 app.get("/", (req, res) => {
     res.status(200).json({
         msg: "hello world",

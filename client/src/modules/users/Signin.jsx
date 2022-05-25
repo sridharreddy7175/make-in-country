@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { SigninUser } from "../../redux/users/user_action";
+import Footer from "../layout/Footer";
 
 
 
@@ -141,6 +142,7 @@ let Signin = (props) => {
                     </div>
                 </div>
             </section>
+            <Footer />
         </React.Fragment>
     );
 };

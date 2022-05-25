@@ -6,12 +6,10 @@ import Entertainment from "../topEntertainment/Entertainment";
 const HomeApps = () => {
     const [apps, setApps] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [filterCateory, setFilterCateory] = useState()
-    const [filterCountry, setFilterCountry] = useState("")
-    const [filterDownloads, setFilterDownloads] = useState("")
-    const [filterRating, setFilterRating] = useState("")
-
-
+    const [filterCateory, setFilterCateory] = useState();
+    const [filterCountry, setFilterCountry] = useState("");
+    const [filterDownloads, setFilterDownloads] = useState("");
+    const [filterRating, setFilterRating] = useState("");
 
     const [dupApps, setDupApps] = useState([]);
 
@@ -63,51 +61,63 @@ const HomeApps = () => {
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
 
-    // useEffect(() => {
+    const filteredItemCategory = async (value, type) => {
+        setFilterCateory(value);
+    };
 
-    // }, [filteredItemCategory, filteredItemCountry])
+    const filteredItemCountry = async (value, type) => {
+        setFilterCountry(value);
+    };
+    const filteredItemDownloads = async (value, type) => {
+        setFilterDownloads(value);
+    };
+    const filteredItemRating = async (value, type) => {
+        setFilterRating(value);
+    };
 
     useEffect(() => {
-        console.log("filterCateory", filterCateory, "coun", filterCountry)
-    }, [filterCateory, filterCountry])
+        console.log(filterCateory, filterCountry, filterDownloads, filterRating);
+        // if (
+        //     filterCateory?.length > 0 ||
+        //     filterCountry?.length > 0 ||
+        //     filterDownloads?.length > 0 ||
+        //     filterRating?.length > 0
+        // ) {
+        async function filter() {
+            var filtercondition = [
+                filterCateory,
+                filterCountry,
+                filterDownloads,
+                filterRating,
+            ];
+            console.log(filterCateory);
+            var filtered = await dupApps.filter((o) => {
+                console.log(
+                    filtercondition[0],
+                    o.category?.name,
+                    filtercondition[o],
+                    "oooo"
+                );
+                if (filtercondition[0] && o.category.name !== filtercondition[0]) {
+                    return false;
+                }
+                if (filtercondition[1] && o.country !== filtercondition[1]) {
 
-    const filteredItem = async (filterCateory) => {
-        const result = await dupApps.filter((a) => {
-            console.log("a", a.country);
-            return filterCateory === a.country
-        });
-        console.log("result", await result);
-        setApps(result);
-    };
-
-    const filteredItemCategory = async (category) => {
-        await setFilterCateory(category)
-        await filteredItem(category)
-
-    };
-
-    const filteredItemDownloads = async (category) => {
-        setFilterDownloads(category)
-        await filteredItem(category)
-
-
-    };
-
-    const filteredItemCountry = async (category) => {
-        await setFilterCountry(category)
-        await filteredItem(category)
-
-
-
-    };
-    const filteredItemRating = async (category) => {
-        await setFilterRating(category)
-        await filteredItem(category)
-
-
-    };
-
-
+                    return false;
+                }
+                if (filtercondition[2] && o.downloads !== filtercondition[2]) {
+                    return false;
+                }
+                if (filtercondition[3] && o.ratings !== filtercondition[3]) {
+                    return false;
+                }
+                return true;
+            });
+            setApps(filtered);
+        }
+        filter();
+        // }
+    }, [filterCateory, filterCountry, filterDownloads, filterRating]);
 
     return (
         <div>
@@ -124,15 +134,14 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    await filteredItemCategory(e.target.value);
+                                    // await filteredItemCategory(e.target.value, 'category')
+                                    filteredItemCategory(e.target.value, "category");
                                 }}
                             >
                                 <option value="">Category</option>
                                 {dupApps &&
                                     filteredCategory.map((cate, index) => (
-                                        <option key={index} value={cate?.category.name}
-                                        // name="cat"
-                                        >
+                                        <option key={index} value={cate?.category.name}>
                                             {cate?.category.name}
                                         </option>
                                     ))}
@@ -141,7 +150,8 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    filteredItemCountry(e.target.value);
+                                    // filteredItemCategory(e.target.value, 'country');
+                                    filteredItemCountry(e.target.value, "country");
                                 }}
                             >
                                 <option value="">Country</option>
@@ -160,7 +170,8 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    filteredItemDownloads(e.target.value);
+                                    // filteredItemCategory(e.target.value, 'downloads');
+                                    filteredItemDownloads(e.target.value, "downloads");
                                 }}
                             >
                                 <option value="">Downloads</option>
@@ -175,7 +186,8 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    filteredItemRating(e.target.value);
+                                    // filteredItemCategory(e.target.value, 'ratings');
+                                    filteredItemRating(e.target.value, "ratings");
                                 }}
                             >
                                 <option value="">Ratings</option>
@@ -273,7 +285,6 @@ const HomeApps = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };

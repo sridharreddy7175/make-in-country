@@ -6,22 +6,13 @@ import Axios from "axios";
 const ManageCategories = () => {
     const [categories, setCategories] = useState([]);
     const getCategories = async () => {
-        // try {
-        //     const data = await Axios.get("/api/categories");
-        //     console.log("data", data.data)
-        //     setCategories(data.data);
-        // } catch (err) {
-        //     console.log(err);
-        // }
-        Axios.get("/api/categories")
-            .then((res) => {
-                setCategories(res.data);
-
-
-            })
-            .catch((err) => {
-                console.log("err", err.response.data.errors[0].msg);
-            });
+        try {
+            const data = await Axios.get("/api/categories");
+            console.log("data", data.data)
+            setCategories(data.data);
+        } catch (err) {
+            console.log(err);
+        }
     };
     useEffect(() => {
         getCategories();

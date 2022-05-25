@@ -151,8 +151,8 @@ const Apps = () => {
                                 {apps?.length > 0 ? (
                                     apps?.map((a) => {
                                         // console.log("datta", a)
-                                        let categoryName = a?.category?.name;
-                                        let country = a?.country;
+                                        let categoryName = a.category.name;
+                                        let country = a.country;
 
                                         return (
                                             <div className="col-6 px-0 mx-0 col-md-auto" key={a._id}>
@@ -232,10 +232,10 @@ const Apps = () => {
                     </div>
                 </div>
             </div>
-            {/* <Games />
+            <Games />
             <Payments />
             <Social />
-            <Entertainment /> */}
+            <Entertainment />
             <Footer />
 
         </div>

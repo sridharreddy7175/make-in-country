@@ -23,13 +23,21 @@ const UpdateApps = (props) => {
     const [categories, setCategories] = useState([]);
     const { id } = useParams();
     const getCategories = async () => {
-        try {
-            const data = await Axios.get("/api/categories");
-            console.log("data", data.data);
-            setCategories(data.data);
-        } catch (err) {
-            console.log(err);
-        }
+        // try {
+        //     const data = await Axios.get("/api/categories");
+        //     console.log("data", data.data);
+        //     setCategories(data.data);
+        // } catch (err) {
+        //     console.log(err);
+        // }
+        Axios.get("/api/categories")
+            .then((res) => {
+                setCategories(res.data)
+
+            })
+            .catch((err) => {
+                console.log("err", err.response.data.errors[0].msg);
+            });
     };
     useEffect(() => {
         getCategories();
@@ -38,30 +46,53 @@ const UpdateApps = (props) => {
 
 
     const getApp = async () => {
-        try {
-            var resProducts = await fetch(`/api/app/${id}`);
-            var response = await resProducts.json();
-            console.log("res", response);
-            setName(response.name);
-            setSize(response.size);
-            setPhoto(response.photo);
-            setCategory(response.category);
-            setDownloads(response.downloads);
-            setRatings(response.ratings);
-            setRatingCount(response.ratingCount);
-            setCountry(response.country);
-            setFounder(response.founder);
-            setCurrentOwner(response.currentOwner);
-            setCompany(response.company);
-            setFirstRelase(response.firstRelase);
-            setHeadQuarter(response.headQuarter);
-            setDetails(response.details);
-            setIssues(response.issues);
-            setFeatures(response.features);
+        // try {
+        //     var resProducts = await fetch(`/api/app/${id}`);
+        //     var response = await resProducts.json();
+        //     console.log("res", response);
+        //     setName(response.name);
+        //     setSize(response.size);
+        //     setPhoto(response.photo);
+        //     setCategory(response.category);
+        //     setDownloads(response.downloads);
+        //     setRatings(response.ratings);
+        //     setRatingCount(response.ratingCount);
+        //     setCountry(response.country);
+        //     setFounder(response.founder);
+        //     setCurrentOwner(response.currentOwner);
+        //     setCompany(response.company);
+        //     setFirstRelase(response.firstRelase);
+        //     setHeadQuarter(response.headQuarter);
+        //     setDetails(response.details);
+        //     setIssues(response.issues);
+        //     setFeatures(response.features);
 
-        } catch (err) {
-            console.log(err);
-        }
+        // } catch (err) {
+        //     console.log(err);
+        // }
+        Axios.get(`/api/app/${id}`)
+            .then((res) => {
+                setName(res.data.name);
+                setSize(res.data.size);
+                setPhoto(res.data.photo);
+                setCategory(res.data.category);
+                setDownloads(res.data.downloads);
+                setRatings(res.data.ratings);
+                setRatingCount(res.data.ratingCount);
+                setCountry(res.data.country);
+                setFounder(res.data.founder);
+                setCurrentOwner(res.data.currentOwner);
+                setCompany(res.data.company);
+                setFirstRelase(res.data.firstRelase);
+                setHeadQuarter(res.data.headQuarter);
+                setDetails(res.data.details);
+                setIssues(res.data.issues);
+                setFeatures(res.data.features);
+
+            })
+            .catch((err) => {
+                console.log("err", err.response.data.errors[0].msg);
+            });
     };
     useEffect(() => {
         getApp();
@@ -98,32 +129,59 @@ const UpdateApps = (props) => {
         formData.append("issues", issues);
         formData.append("features", features);
 
-        try {
-            const data = await Axios.put(
-                `http://localhost:8000/api/app/${id}`,
-                formData
-            );
-            console.log("data", data);
-            setName("");
-            setSize("");
-            setPhoto("");
-            setCategory("");
-            setDownloads("");
-            setRatings("");
-            setRatingCount("");
-            setCountry("");
-            setFounder("");
-            setCurrentOwner("");
-            setCompany("");
-            setCategory("");
-            setFirstRelase("");
-            setHeadQuarter("");
-            setDetails("");
-            setIssues("");
-            setFeatures("");
-        } catch (err) {
-            console.log(err);
-        }
+        // try {
+        //     const data = await Axios.put(
+        //         `http://localhost:8000/api/app/${id}`,
+        //         formData
+        //     );
+        //     console.log("data", data);
+        //     setName("");
+        //     setSize("");
+        //     setPhoto("");
+        //     setCategory("");
+        //     setDownloads("");
+        //     setRatings("");
+        //     setRatingCount("");
+        //     setCountry("");
+        //     setFounder("");
+        //     setCurrentOwner("");
+        //     setCompany("");
+        //     setCategory("");
+        //     setFirstRelase("");
+        //     setHeadQuarter("");
+        //     setDetails("");
+        //     setIssues("");
+        //     setFeatures("");
+        // } catch (err) {
+        //     console.log(err);
+        // }
+
+        Axios.put(`/api/app/${id}`, formData)
+            .then((res) => {
+                console.log("res", res.data.msg);
+
+            })
+            .catch((err) => {
+                console.log("err", err.response.data.errors[0].msg);
+            });
+        setName("");
+        setSize("");
+        setPhoto("");
+        setCategory("");
+        setDownloads("");
+        setRatings("");
+        setRatingCount("");
+        setCountry("");
+        setFounder("");
+        setCurrentOwner("");
+        setCompany("");
+        setCategory("");
+        setFirstRelase("");
+        setHeadQuarter("");
+        setDetails("");
+        setIssues("");
+        setFeatures("");
+
     };
 
     const updateProductForm = () => (

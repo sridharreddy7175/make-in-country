@@ -41,7 +41,7 @@ const Home = () => {
                     </h3>
                 </div>
             </div>
-            {/* <HomeApps /> */}
+            <HomeApps />
             <Products />
             <Services />
             <Footer />

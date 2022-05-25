@@ -66,32 +66,58 @@ const CreateApps = (props) => {
         formData.append("issues", issues);
         formData.append("features", features);
 
-        try {
-            const data = await Axios.post(
-                "/api/app/create",
-                formData
-            );
-            console.log("data", data);
-            setName("");
-            setSize("");
-            setPhoto("");
-            setCategory("");
-            setDownloads("");
-            setRatings("");
-            setRatingCount("");
-            setCountry("");
-            setFounder("");
-            setCurrentOwner("");
-            setCompany("");
-            setCategory("");
-            setFirstRelase("");
-            setHeadQuarter("");
-            setDetails("");
-            setIssues("");
-            setFeatures("");
-        } catch (err) {
-            console.log(err);
-        }
+        // try {
+        //     const data = await Axios.post(
+        //         "/api/app/create",
+        //         formData
+        //     );
+        //     console.log("data", data);
+        //     setName("");
+        //     setSize("");
+        //     setPhoto("");
+        //     setCategory("");
+        //     setDownloads("");
+        //     setRatings("");
+        //     setRatingCount("");
+        //     setCountry("");
+        //     setFounder("");
+        //     setCurrentOwner("");
+        //     setCompany("");
+        //     setCategory("");
+        //     setFirstRelase("");
+        //     setHeadQuarter("");
+        //     setDetails("");
+        //     setIssues("");
+        //     setFeatures("");
+        // } catch (err) {
+        //     console.log(err);
+        // }
+
+        Axios.post("/api/app/create", formData)
+            .then((res) => {
+                console.log("res", res.data.msg);
+
+            })
+            .catch((err) => {
+                console.log("err", err.response.data.errors[0].msg);
+            });
+        setName("");
+        setSize("");
+        setPhoto("");
+        setCategory("");
+        setDownloads("");
+        setRatings("");
+        setRatingCount("");
+        setCountry("");
+        setFounder("");
+        setCurrentOwner("");
+        setCompany("");
+        setCategory("");
+        setFirstRelase("");
+        setHeadQuarter("");
+        setDetails("");
+        setIssues("");
+        setFeatures("");
     };
 
     const createProductForm = () => (

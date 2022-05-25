@@ -5,6 +5,7 @@ var app = express();
 var cors = require("cors");
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
+const path = require('path');
 // app.use(bodyParser.urlencoded({ extended: true }));
 //  DATABASE=mongodb+srv://sridhar:sridhar@cluster0.9knrs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
@@ -25,11 +26,7 @@ mongoose
     })
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log(err));
-// app.get("/", (req, res) => {
-//     res.status(200).json({
-//         msg: "hello world",
-//     });
-// });
+
 
 
 if (process.env.NODE_ENV === 'production') {

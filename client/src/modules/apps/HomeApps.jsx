@@ -6,6 +6,12 @@ import Entertainment from "../topEntertainment/Entertainment";
 const HomeApps = () => {
     const [apps, setApps] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [filterCateory, setFilterCateory] = useState()
+    const [filterCountry, setFilterCountry] = useState("")
+    const [filterDownloads, setFilterDownloads] = useState("")
+    const [filterRating, setFilterRating] = useState("")
+
+
 
     const [dupApps, setDupApps] = useState([]);
 
@@ -57,14 +63,51 @@ const HomeApps = () => {
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
 
-    const filteredItem = async (category) => {
+    // useEffect(() => {
+
+    // }, [filteredItemCategory, filteredItemCountry])
+
+    useEffect(() => {
+        console.log("filterCateory", filterCateory, "coun", filterCountry)
+    }, [filterCateory, filterCountry])
+
+    const filteredItem = async (filterCateory) => {
         const result = await dupApps.filter((a) => {
-            console.log("a", a.category.name);
-            return category === a.category.name;
+            console.log("a", a.country);
+            return filterCateory === a.country
         });
-        console.log("result", result);
+        console.log("result", await result);
         setApps(result);
     };
+
+    const filteredItemCategory = async (category) => {
+        await setFilterCateory(category)
+        await filteredItem(category)
+
+    };
+
+    const filteredItemDownloads = async (category) => {
+        setFilterDownloads(category)
+        await filteredItem(category)
+
+
+    };
+
+    const filteredItemCountry = async (category) => {
+        await setFilterCountry(category)
+        await filteredItem(category)
+
+
+
+    };
+    const filteredItemRating = async (category) => {
+        await setFilterRating(category)
+        await filteredItem(category)
+
+
+    };
+
+
 
     return (
         <div>
@@ -81,13 +124,15 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    filteredItem(e.target.value);
+                                    await filteredItemCategory(e.target.value);
                                 }}
                             >
                                 <option value="">Category</option>
                                 {dupApps &&
                                     filteredCategory.map((cate, index) => (
-                                        <option key={index} value={cate?.category.name}>
+                                        <option key={index} value={cate?.category.name}
+                                        // name="cat"
+                                        >
                                             {cate?.category.name}
                                         </option>
                                     ))}
@@ -95,9 +140,9 @@ const HomeApps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemCountry(e.target.value);
+                                }}
                             >
                                 <option value="">Country</option>
 
@@ -114,9 +159,9 @@ const HomeApps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemDownloads(e.target.value);
+                                }}
                             >
                                 <option value="">Downloads</option>
                                 {dupApps &&
@@ -129,9 +174,9 @@ const HomeApps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemRating(e.target.value);
+                                }}
                             >
                                 <option value="">Ratings</option>
                                 {dupApps &&

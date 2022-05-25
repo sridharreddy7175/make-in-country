@@ -145,7 +145,7 @@ const HomeApps = () => {
                         <div className="container-fluid">
                             <div className="row p-0 mx-md-4 mb-md-4 mt-3">
                                 {apps?.length > 0 ? (
-                                    apps?.map((a) => {
+                                    apps.map((a) => {
                                         // console.log("datta", a)
                                         let categoryName = a.category.name;
                                         let country = a.country;

@@ -25,11 +25,11 @@ mongoose
     })
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log(err));
-app.get("/", (req, res) => {
-    res.status(200).json({
-        msg: "hello world",
-    });
-});
+// app.get("/", (req, res) => {
+//     res.status(200).json({
+//         msg: "hello world",
+//     });
+// });
 
 //Routes
 

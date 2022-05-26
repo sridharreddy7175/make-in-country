@@ -2,67 +2,90 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../layout/Footer";
-import Apps from "./Apps";
 import OtherApps from "./OtherApps";
 
 const AppsCategory = () => {
     const [apps, setApps] = useState([]);
     const categoryName = window.location.pathname.slice(9);
-
+    const [filterCountry, setFilterCountry] = useState("");
+    const [filterDownloads, setFilterDownloads] = useState("");
+    const [filterRating, setFilterRating] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [dupApps, setDupApps] = useState([]);
 
     console.log("23333", categoryName);
 
-    const [categories, setCategories] = useState([]);
 
-    const getCategories = async () => {
-        try {
-            const data = await Axios.get("/api/categories");
-            // console.log("data", data.data);
-            // catData = data.data;
-            setCategories(data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    useEffect(() => {
-        getCategories();
-    }, []);
 
     const getApps = async () => {
+        setLoading(true)
         try {
             const data = await Axios.get("/api/apps");
             setApps(data.data);
+            setDupApps(data.data);
+            setLoading(false);
         } catch (err) {
             console.log(err);
+            setError(true);
         }
     };
 
     useEffect(() => {
         getApps();
     }, []);
-
-    const filteredCountry = apps.filter(
+    const filteredCountry = dupApps.filter(
         (li, idx, self) =>
             self.map((itm) => itm.country).indexOf(li.country) === idx
     );
 
-    const filteredDownloads = apps.filter(
+
+
+    const filteredDownloads = dupApps.filter(
         (li, idx, self) =>
             self.map((itm) => itm.downloads).indexOf(li.downloads) === idx
     );
 
-    const filteredRatings = apps.filter(
+    const filteredRatings = dupApps.filter(
         (li, idx, self) =>
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
+    useEffect(() => {
 
-    const filteredItem = () => {
-        const result = apps.filter((a) => {
-            console.log("a", a.category.name);
-            return categoryName === a.category.name;
-        });
-        return result;
-    };
+        async function filter() {
+            var filtercondition = [
+                filterCountry,
+                filterDownloads,
+                filterRating,
+            ];
+            var filtered = await dupApps.filter((o) => {
+                // if (filtercondition[0] && o.category.name !== filtercondition[0]) {
+                //     return false;
+                // }
+                if (filtercondition[0] && o.country !== filtercondition[0]) {
+                    return false;
+                }
+                if (filtercondition[1] && o.downloads !== filtercondition[1]) {
+                    return false;
+                }
+                if (filtercondition[2] && o.ratings !== filtercondition[2]) {
+                    return false;
+                }
+                return true;
+            });
+            setApps(filtered);
+        }
+        filter();
+
+    }, [filterCountry, filterDownloads, filterRating]);
+
+    if (error === true) {
+        return <h3 className="container mt-5">falied to Loading....</h3>;
+    }
+    if (loading === true) {
+        return <h3 className="container mt-5">Loading......</h3>;
+    }
+
 
     return (
         <div>
@@ -75,46 +98,38 @@ const AppsCategory = () => {
                             </p>
                         </div>
                         <div className="col-md-8 text-md-right text-center m-auto">
-                            {categoryName ? (
-                                <select
-                                    className="border border-primary rounded-pill p-1 mr-2"
-                                    style={{ outline: "none" }}
-                                >
-                                    <option value="">Country</option>
-
-                                    {apps &&
-                                        filteredCountry.map((cate, index) => {
-                                            return (
-                                                <option key={index} value={cate._id}>
-                                                    {cate.country}
-                                                </option>
-                                            );
-                                        })}
-                                </select>
-                            ) : (
-                                <select
-                                    className="border border-primary rounded-pill p-1 mr-2"
-                                    style={{ outline: "none" }}
-                                    onClick={filteredItem}
-                                >
-                                    <option value="">Category</option>
-                                    {categories &&
-                                        categories.map((cate, index) => (
-                                            <option key={index} value={cate._id}>
-                                                {cate.name}
-                                            </option>
-                                        ))}
-                                </select>
-                            )}
 
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
+                                onClick={async (e) => {
+                                    setFilterCountry(e.target.value);
+                                }}
+                            >
+                                <option value="">Country</option>
+
+                                {apps &&
+                                    filteredCountry.map((cate, index) => {
+                                        return (
+                                            <option key={index} value={cate.country}>
+                                                {cate.country}
+                                            </option>
+                                        );
+                                    })}
+                            </select>
+
+
+                            <select
+                                className="border border-primary rounded-pill p-1 mr-2"
+                                style={{ outline: "none" }}
+                                onClick={async (e) => {
+                                    setFilterDownloads(e.target.value);
+                                }}
                             >
                                 <option value="">Downloads</option>
                                 {apps &&
                                     filteredDownloads.map((cate, index) => (
-                                        <option key={index} value={cate._id}>
+                                        <option key={index} value={cate._downloads}>
                                             {cate.downloads}
                                         </option>
                                     ))}
@@ -122,11 +137,14 @@ const AppsCategory = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
+                                onClick={async (e) => {
+                                    setFilterRating(e.target.value);
+                                }}
                             >
                                 <option value="">Ratings</option>
                                 {apps &&
                                     filteredRatings.map((cate, index) => (
-                                        <option key={index} value={cate._id}>
+                                        <option key={index} value={cate._rating}>
                                             {cate.ratings}
                                         </option>
                                     ))}
@@ -135,9 +153,8 @@ const AppsCategory = () => {
                         <div className="container-fluid">
                             <div className="row p-0 mx-md-4 mb-md-4 mt-3">
                                 {apps?.map((a) => {
-                                    console.log("a", a.category.name);
-                                    return categoryName === a.category.name ||
-                                        categoryName === a.country ? (
+                                    return categoryName === a?.category?.name ||
+                                        categoryName === a?.country ? (
                                         <div className="col-6 px-0 mx-0 col-md-auto" key={a._id}>
                                             <div
                                                 className="card p-1 my-2 mx-2 mx-md-2  mx-xl-2 mx-lg-2"

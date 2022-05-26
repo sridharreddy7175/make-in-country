@@ -5,35 +5,25 @@ import Entertainment from "../topEntertainment/Entertainment";
 
 const HomeApps = () => {
     const [apps, setApps] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [filterCateory, setFilterCateory] = useState();
     const [filterCountry, setFilterCountry] = useState("");
     const [filterDownloads, setFilterDownloads] = useState("");
     const [filterRating, setFilterRating] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const [dupApps, setDupApps] = useState([]);
 
-    const getCategories = async () => {
-        try {
-            const data = await Axios.get("/api/categories");
-            // console.log("data", data.data);
-            // catData = data.data;
-            setCategories(data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    useEffect(() => {
-        getCategories();
-    }, []);
+
     const getApps = async () => {
         try {
             const data = await Axios.get("/api/apps");
-            // console.log("data", data.data);
             setApps(data.data);
             setDupApps(data.data);
+            setLoading(false);
         } catch (err) {
             console.log(err);
+            setError(true)
         }
     };
 
@@ -76,13 +66,6 @@ const HomeApps = () => {
     };
 
     useEffect(() => {
-        console.log(filterCateory, filterCountry, filterDownloads, filterRating);
-        // if (
-        //     filterCateory?.length > 0 ||
-        //     filterCountry?.length > 0 ||
-        //     filterDownloads?.length > 0 ||
-        //     filterRating?.length > 0
-        // ) {
         async function filter() {
             var filtercondition = [
                 filterCateory,
@@ -92,17 +75,10 @@ const HomeApps = () => {
             ];
             console.log(filterCateory);
             var filtered = await dupApps.filter((o) => {
-                console.log(
-                    filtercondition[0],
-                    o.category?.name,
-                    filtercondition[o],
-                    "oooo"
-                );
                 if (filtercondition[0] && o.category.name !== filtercondition[0]) {
                     return false;
                 }
                 if (filtercondition[1] && o.country !== filtercondition[1]) {
-
                     return false;
                 }
                 if (filtercondition[2] && o.downloads !== filtercondition[2]) {
@@ -116,8 +92,17 @@ const HomeApps = () => {
             setApps(filtered);
         }
         filter();
-        // }
+
     }, [filterCateory, filterCountry, filterDownloads, filterRating]);
+
+
+    if (error === true) {
+        return <h3 className="container mt-5">falied to Loading....</h3>;
+    }
+    if (loading === true) {
+        return <h3 className="container mt-5">Loading......</h3>;
+    }
+
 
     return (
         <div>
@@ -134,7 +119,6 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    // await filteredItemCategory(e.target.value, 'category')
                                     filteredItemCategory(e.target.value, "category");
                                 }}
                             >
@@ -150,7 +134,6 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    // filteredItemCategory(e.target.value, 'country');
                                     filteredItemCountry(e.target.value, "country");
                                 }}
                             >
@@ -170,7 +153,6 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    // filteredItemCategory(e.target.value, 'downloads');
                                     filteredItemDownloads(e.target.value, "downloads");
                                 }}
                             >
@@ -186,7 +168,6 @@ const HomeApps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    // filteredItemCategory(e.target.value, 'ratings');
                                     filteredItemRating(e.target.value, "ratings");
                                 }}
                             >
@@ -203,7 +184,6 @@ const HomeApps = () => {
                             <div className="row p-0 mx-md-4 mb-md-4 mt-3">
                                 {apps?.length > 0 ? (
                                     apps?.map((a) => {
-                                        // console.log("datta", a)
                                         let categoryName = a.category.name;
                                         let country = a.country;
 

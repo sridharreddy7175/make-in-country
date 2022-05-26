@@ -9,31 +9,25 @@ import Social from "../topSocial/Social";
 
 const Apps = () => {
     const [apps, setApps] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [filterCateory, setFilterCateory] = useState();
+    const [filterCountry, setFilterCountry] = useState("");
+    const [filterDownloads, setFilterDownloads] = useState("");
+    const [filterRating, setFilterRating] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const [dupApps, setDupApps] = useState([]);
 
-    const getCategories = async () => {
-        try {
-            const data = await Axios.get("/api/categories");
-            // console.log("data", data.data);
-            // catData = data.data;
-            setCategories(data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    useEffect(() => {
-        getCategories();
-    }, []);
     const getApps = async () => {
+        setLoading(true);
         try {
             const data = await Axios.get("/api/apps");
-            // console.log("data", data.data);
             setApps(data.data);
             setDupApps(data.data);
+            setLoading(false);
         } catch (err) {
             console.log(err);
+            setError(true);
         }
     };
 
@@ -61,14 +55,59 @@ const Apps = () => {
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
 
-    const filteredItem = async (category) => {
-        const result = await dupApps.filter((a) => {
-            console.log("a", a.category.name);
-            return category === a.category.name;
-        });
-        console.log("result", result);
-        setApps(result);
+
+
+    const filteredItemCategory = async (value, type) => {
+        setFilterCateory(value);
     };
+
+    const filteredItemCountry = async (value, type) => {
+        setFilterCountry(value);
+    };
+    const filteredItemDownloads = async (value, type) => {
+        setFilterDownloads(value);
+    };
+    const filteredItemRating = async (value, type) => {
+        setFilterRating(value);
+    };
+
+    useEffect(() => {
+
+        async function filter() {
+            var filtercondition = [
+                filterCateory,
+                filterCountry,
+                filterDownloads,
+                filterRating,
+            ];
+            var filtered = await dupApps.filter((o) => {
+                if (filtercondition[0] && o.category.name !== filtercondition[0]) {
+                    return false;
+                }
+                if (filtercondition[1] && o.country !== filtercondition[1]) {
+                    return false;
+                }
+                if (filtercondition[2] && o.downloads !== filtercondition[2]) {
+                    return false;
+                }
+                if (filtercondition[3] && o.ratings !== filtercondition[3]) {
+                    return false;
+                }
+                return true;
+            });
+            console.log("filted", filtercondition)
+            setApps(filtered);
+        }
+        filter();
+
+    }, [filterCateory, filterCountry, filterDownloads, filterRating]);
+
+    if (error === true) {
+        return <h3 className="container mt-5">falied to Loading....</h3>;
+    }
+    if (loading === true) {
+        return <h3 className="container mt-5">Loading......</h3>;
+    }
 
     return (
         <div>
@@ -77,7 +116,7 @@ const Apps = () => {
                     <div className="row p-0 m-0">
                         <div className="col-md-4 d-flex align-content-center">
                             <p className=" h5 ml-4 my-auto text-md-left text-lg-left text-center text-primary">
-                                Apps
+                                Top Apps
                             </p>
                         </div>
                         <div className="col-md-8 text-md-right text-center m-auto">
@@ -85,7 +124,7 @@ const Apps = () => {
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
-                                    filteredItem(e.target.value);
+                                    filteredItemCategory(e.target.value, "category");
                                 }}
                             >
                                 <option value="">Category</option>
@@ -99,9 +138,9 @@ const Apps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemCountry(e.target.value, "country");
+                                }}
                             >
                                 <option value="">Country</option>
 
@@ -118,9 +157,9 @@ const Apps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemDownloads(e.target.value, "downloads");
+                                }}
                             >
                                 <option value="">Downloads</option>
                                 {dupApps &&
@@ -133,9 +172,9 @@ const Apps = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemRating(e.target.value, "ratings");
+                                }}
                             >
                                 <option value="">Ratings</option>
                                 {dupApps &&
@@ -150,7 +189,6 @@ const Apps = () => {
                             <div className="row p-0 mx-md-4 mb-md-4 mt-3">
                                 {apps?.length > 0 ? (
                                     apps?.map((a) => {
-                                        // console.log("datta", a)
                                         let categoryName = a.category.name;
                                         let country = a.country;
 
@@ -237,7 +275,6 @@ const Apps = () => {
             <Social />
             <Entertainment />
             <Footer />
-
         </div>
     );
 };

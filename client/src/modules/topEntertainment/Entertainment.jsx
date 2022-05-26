@@ -4,27 +4,16 @@ import { Link } from "react-router-dom";
 
 const Entertainment = () => {
     const [apps, setApps] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [filterCountry, setFilterCountry] = useState("");
+    const [filterDownloads, setFilterDownloads] = useState("");
+    const [filterRating, setFilterRating] = useState("");
 
     const [dupApps, setDupApps] = useState([]);
 
-    const getCategories = async () => {
-        try {
-            const data = await Axios.get("/api/categories");
-            // console.log("data", data.data);
-            // catData = data.data;
-            setCategories(data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    useEffect(() => {
-        getCategories();
-    }, []);
+
     const getApps = async () => {
         try {
             const data = await Axios.get("/api/apps");
-            // console.log("data", data.data);
             setApps(data.data);
             setDupApps(data.data);
         } catch (err) {
@@ -41,11 +30,6 @@ const Entertainment = () => {
             self.map((itm) => itm.country).indexOf(li.country) === idx
     );
 
-    const filteredCategory = dupApps.filter(
-        (li, idx, self) =>
-            self.map((itm) => itm.category.name).indexOf(li.category.name) === idx
-    );
-
     const filteredDownloads = dupApps.filter(
         (li, idx, self) =>
             self.map((itm) => itm.downloads).indexOf(li.downloads) === idx
@@ -56,14 +40,37 @@ const Entertainment = () => {
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
 
-    const filteredItem = async (category) => {
-        const result = await dupApps.filter((a) => {
-            console.log("a", a.category.name);
-            return category === a.category.name;
-        });
-        console.log("result", result);
-        setApps(result);
+
+    const filteredItemDownloads = async (value) => {
+        setFilterDownloads(value);
     };
+    const filteredItemRating = async (value) => {
+        setFilterRating(value);
+    };
+
+    useEffect(() => {
+
+        async function filter() {
+            var filtercondition = [filterCountry, filterDownloads, filterRating];
+
+            var filtered = await dupApps.filter((o) => {
+                if (filtercondition[0] && o.country !== filtercondition[0]) {
+                    return false;
+                }
+                if (filtercondition[1] && o.downloads !== filtercondition[1]) {
+                    return false;
+                }
+                if (filtercondition[2] && o.ratings !== filtercondition[2]) {
+                    return false;
+                }
+                return true;
+            });
+            console.log("filted", filtercondition)
+            setApps(filtered);
+        }
+        filter();
+
+    }, [filterCountry, filterDownloads, filterRating]);
 
     return (
         <div>
@@ -79,9 +86,9 @@ const Entertainment = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    await setFilterCountry(e.target.value)
+                                }}
                             >
                                 <option value="">Country</option>
 
@@ -98,9 +105,9 @@ const Entertainment = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemDownloads(e.target.value, "downloads");
+                                }}
                             >
                                 <option value="">Downloads</option>
                                 {dupApps &&
@@ -113,9 +120,9 @@ const Entertainment = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemRating(e.target.value, "ratings");
+                                }}
                             >
                                 <option value="">Ratings</option>
                                 {dupApps &&

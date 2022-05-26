@@ -2,29 +2,18 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Games = () => {
+const Entertainment = () => {
     const [apps, setApps] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [filterCountry, setFilterCountry] = useState("");
+    const [filterDownloads, setFilterDownloads] = useState("");
+    const [filterRating, setFilterRating] = useState("");
 
     const [dupApps, setDupApps] = useState([]);
 
-    const getCategories = async () => {
-        try {
-            const data = await Axios.get("/api/categories");
-            // console.log("data", data.data);
-            // catData = data.data;
-            setCategories(data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    useEffect(() => {
-        getCategories();
-    }, []);
+
     const getApps = async () => {
         try {
             const data = await Axios.get("/api/apps");
-            // console.log("data", data.data);
             setApps(data.data);
             setDupApps(data.data);
         } catch (err) {
@@ -41,11 +30,6 @@ const Games = () => {
             self.map((itm) => itm.country).indexOf(li.country) === idx
     );
 
-    const filteredCategory = dupApps.filter(
-        (li, idx, self) =>
-            self.map((itm) => itm.category.name).indexOf(li.category.name) === idx
-    );
-
     const filteredDownloads = dupApps.filter(
         (li, idx, self) =>
             self.map((itm) => itm.downloads).indexOf(li.downloads) === idx
@@ -56,14 +40,38 @@ const Games = () => {
             self.map((itm) => itm.ratings).indexOf(li.ratings) === idx
     );
 
-    const filteredItem = async (category) => {
-        const result = await dupApps.filter((a) => {
-            console.log("a", a.category.name);
-            return category === a.category.name;
-        });
-        console.log("result", result);
-        setApps(result);
+    const filteredItemCountry = async (value, type) => {
+        setFilterCountry(value);
     };
+    const filteredItemDownloads = async (value, type) => {
+        setFilterDownloads(value);
+    };
+    const filteredItemRating = async (value, type) => {
+        setFilterRating(value);
+    };
+
+    useEffect(() => {
+
+        async function filter() {
+            var filtercondition = [filterCountry, filterDownloads, filterRating];
+
+            var filtered = await dupApps.filter((o) => {
+                if (filtercondition[0] && o.country !== filtercondition[0]) {
+                    return false;
+                }
+                if (filtercondition[1] && o.downloads !== filtercondition[1]) {
+                    return false;
+                }
+                if (filtercondition[2] && o.ratings !== filtercondition[2]) {
+                    return false;
+                }
+                return true;
+            });
+            setApps(filtered);
+        }
+        filter();
+
+    }, [filterCountry, filterDownloads, filterRating]);
 
     return (
         <div>
@@ -72,16 +80,16 @@ const Games = () => {
                     <div className="row p-0 m-0">
                         <div className="col-md-4 d-flex align-content-center">
                             <p className=" h5 ml-4 my-auto text-md-left text-lg-left text-center text-primary">
-                                Top Games
+                                Top Entertainment
                             </p>
                         </div>
                         <div className="col-md-8 text-md-right text-center m-auto">
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemCountry(e.target.value, "country");
+                                }}
                             >
                                 <option value="">Country</option>
 
@@ -98,9 +106,9 @@ const Games = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemDownloads(e.target.value, "downloads");
+                                }}
                             >
                                 <option value="">Downloads</option>
                                 {dupApps &&
@@ -113,9 +121,9 @@ const Games = () => {
                             <select
                                 className="border border-primary rounded-pill p-1 mr-2"
                                 style={{ outline: "none" }}
-                            // onClick={async (e) => {
-                            //     filteredItem(e.target.value);
-                            // }}
+                                onClick={async (e) => {
+                                    filteredItemRating(e.target.value, "ratings");
+                                }}
                             >
                                 <option value="">Ratings</option>
                                 {dupApps &&
@@ -134,7 +142,7 @@ const Games = () => {
                                         let country = a.country;
 
                                         return (
-                                            a.category.name === "Game" && (
+                                            a.category.name === "Entertainment" && (
                                                 <div
                                                     className="col-6 px-0 mx-0 col-md-auto"
                                                     key={a._id}
@@ -223,4 +231,4 @@ const Games = () => {
     );
 };
 
-export default Games;
+export default Entertainment;

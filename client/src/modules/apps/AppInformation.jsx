@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { BsArrowDownShort } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
 import { BsFillHandbagFill } from "react-icons/bs";
+import OtherApps from "./OtherApps";
+import Footer from "../layout/Footer";
 
 const AppInformation = () => {
     const { id } = useParams();
@@ -53,23 +55,7 @@ const AppInformation = () => {
         getApp();
     }, []);
 
-    // const getCategory = async () => {
-    //     try {
-    //         var resProducts = await fetch(
-    //             `http://localhost:8000/api/category/${category}`
-    //         );
-    //         var response = await resProducts?.json();
-    //         // console.log("res", response);
-    //         setCatName(response?.name);
-    //         // setName(response.name);
-    //         // console.log("response123", response);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-    // useEffect(() => {
-    //     getCategory();
-    // }, []);
+
 
     return (
         <div>
@@ -210,6 +196,8 @@ const AppInformation = () => {
                     </div>
                 </div>
             </div>
+            <OtherApps />
+            <Footer />
         </div>
     );
 };

@@ -39,7 +39,7 @@ const UpdateApps = (props) => {
 
     const getApp = async () => {
         try {
-            var resProducts = await fetch(`http://localhost:8000/api/app/${id}`);
+            var resProducts = await fetch(`/api/app/${id}`);
             var response = await resProducts.json();
             console.log("res", response);
             setName(response.name);
@@ -100,7 +100,7 @@ const UpdateApps = (props) => {
 
         try {
             const data = await Axios.put(
-                `http://localhost:8000/api/app/${id}`,
+                `/api/app/${id}`,
                 formData
             );
             console.log("data", data);

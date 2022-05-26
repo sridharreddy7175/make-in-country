@@ -5,7 +5,7 @@ import Base from "./core/Base";
 
 
 const AdminDashboard = (props) => {
-    console.log("props", props.details.user.name)
+    // console.log("props", props.details.user.name)
     const adminLeftSide = () => {
         return (
             <div className="card">

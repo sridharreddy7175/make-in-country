@@ -30,7 +30,7 @@ const AppInformation = () => {
         try {
             var resProducts = await fetch(`/api/app/${id}`);
             var response = await resProducts.json();
-            console.log("response", response)
+            console.log("response", response);
             setName(response?.name);
             setSize(response?.size);
             setPhoto(response?.photo);
@@ -55,8 +55,6 @@ const AppInformation = () => {
         getApp();
     }, []);
 
-
-
     return (
         <div>
             <div className="container mt-5 mb-5">
@@ -74,7 +72,7 @@ const AppInformation = () => {
                                             className=""
                                             height="60"
                                             width="60"
-                                            src={`http://localhost:8000/api/app/photo/${id}`}
+                                            src={`/api/app/photo/${id}`}
                                             style={{ borderRadius: "20px" }}
                                         />
                                     </div>
@@ -191,7 +189,6 @@ const AppInformation = () => {
                             </div>
 
                             <h6>{details}</h6>
-
                         </div>
                     </div>
                 </div>

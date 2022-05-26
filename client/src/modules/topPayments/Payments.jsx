@@ -85,7 +85,7 @@ const Payments = () => {
                         </div>
                         <div className="col-md-8 text-md-right text-center m-auto">
                             <select
-                                className="border border-primary rounded-pill p-1 mr-2"
+                                className="border border-primary rounded-pill p-1 mr-2 mt-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
                                     filteredItemCountry(e.target.value, "country");
@@ -104,7 +104,7 @@ const Payments = () => {
                             </select>
 
                             <select
-                                className="border border-primary rounded-pill p-1 mr-2"
+                                className="border border-primary rounded-pill p-1 mr-2 mt-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
                                     filteredItemDownloads(e.target.value, "downloads");
@@ -119,7 +119,7 @@ const Payments = () => {
                                     ))}
                             </select>
                             <select
-                                className="border border-primary rounded-pill p-1 mr-2"
+                                className="border border-primary rounded-pill p-1 mr-2 mt-2"
                                 style={{ outline: "none" }}
                                 onClick={async (e) => {
                                     filteredItemRating(e.target.value, "ratings");

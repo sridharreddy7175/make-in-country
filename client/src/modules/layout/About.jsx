@@ -85,15 +85,15 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-5">
+                {/* <div className="row mt-5" style={{
+                    backgroundColor: "rgba(33,150,243,.3)",
+                    height: "600px",
+                }}>
                     <div
-                        className="col-md-8 m-auto rounded"
-                        style={{
-                            backgroundColor: "rgba(33,150,243,.3)",
-                            height: "600px",
-                        }}
+                        className="col-md-8"
+
                     >
-                        <div className="d-flex justify-content-around mr-2">
+                        <div className="mr-2">
                             <div className="mt-5 mb-5 text-center ">
                                 <img
                                     src="deva.jpg"
@@ -121,7 +121,7 @@ const About = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-5 mb-5 ml-5">
+                            <div className="mt-5 mb-5 ml-5 col-md-4">
                                 <h4>Becoming Self Aware and Self Reliant</h4>
                                 <h6 className="mt-3">
                                     Lets be <b>self reliant</b>. Lets support our country. lets
@@ -138,6 +138,66 @@ const About = () => {
                             </div>
                         </div>
                     </div>
+                </div> */}
+
+
+                <div className="row mt-5">
+                    <div className="col-md-8">
+                        <div
+                            className="pt-5 pb-5 mt-2 text-center rounded"
+                            style={{
+                                backgroundColor: "rgba(33,150,243,.3)",
+                            }}
+                        >
+                            <img
+                                src="deva.jpg"
+                                className="rounded"
+                                AiOutlineInstagram
+                                width="300px"
+                                height="100%"
+                                alt="hello"
+                            />
+
+                            <div>
+                                <p className="">Follow Me</p>
+                                <a href="https://www.instagram.com/rohitreddydevareddy/" className="mr-2" target="_blank">
+                                    <AiOutlineInstagram fontSize="26px" />
+                                </a>
+                                <a href="https://www.linkedin.com/in/sridhar-reddy-b2a1591b0/" className="mr-2"
+                                    target="_blank">
+                                    <AiFillLinkedin fontSize="26px" />
+                                </a>
+                                <Link to="/" className="mr-2" target="_blank">
+                                    <AiFillGooglePlusCircle fontSize="26px" />
+                                </Link>
+                                <Link to="/" className="mr-2" target="_blank">
+                                    <BsWhatsapp fontSize="26px" />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 ">
+                        <div className="pt-5 pb-5 mt-2 text-center rounded"
+                            style={{
+                                backgroundColor: "rgba(33,150,243,.3)",
+                                height: "550px"
+                            }}>
+                            <h4>Becoming Self Aware and Self Reliant</h4>
+                            <h6 className="mt-3">
+                                Lets be <b>self reliant</b>. Lets support our country. lets
+                                put stop to foreign dominance. Promote,motivate,support and
+                                use your products, your services that will help you not
+                                others.
+                            </h6>
+                            <h6 className="mt-5">
+                                <b>DEva Reddy</b>
+                            </h6>
+                            <span className="mt-2">
+                                Owner and developer of MakeInCountry
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <Footer />

@@ -120,7 +120,7 @@ const AppsCountry = () => {
                                                                 className="rounded-circle my-auto"
                                                                 height="60"
                                                                 width="60"
-                                                                src={`http://localhost:8000/api/app/photo/${a._id}`}
+                                                                src={`/api/app/photo/${a._id}`}
                                                                 style={{ borderRadius: "20px" }}
                                                             />
                                                             <span

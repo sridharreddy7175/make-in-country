@@ -18,6 +18,7 @@ import EditUserProfile from "./modules/users/EditUserProfile";
 import AppInformation from "./modules/apps/AppInformation";
 import AppsCategory from "./modules/apps/AppsCategory";
 import Contact from "./modules/layout/Contact";
+import ChangePassword from "./modules/users/ChangePassword";
 
 function App() {
 
@@ -50,6 +51,8 @@ function App() {
           <Route path={`/apps/by/${country}`}>
             <AppsCountry />
           </Route> */}
+
+
           <Route exact path={`/apps/by/:id`}>
             <AppsCategory />
           </Route>
@@ -59,6 +62,9 @@ function App() {
           </Route>
           <Route path="/user/edit-profile">
             <EditUserProfile />
+          </Route>
+          <Route exact path="/change-password">
+            <ChangePassword />
           </Route>
           <Route path="/admin/dashboard">
             <AdminDashboard />

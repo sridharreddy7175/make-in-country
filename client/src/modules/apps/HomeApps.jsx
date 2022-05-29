@@ -1,7 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Entertainment from "../topEntertainment/Entertainment";
 
 const HomeApps = () => {
     const [apps, setApps] = useState([]);
@@ -16,6 +15,7 @@ const HomeApps = () => {
 
 
     const getApps = async () => {
+        setLoading(true)
         try {
             const data = await Axios.get("/api/apps");
             setApps(data.data);

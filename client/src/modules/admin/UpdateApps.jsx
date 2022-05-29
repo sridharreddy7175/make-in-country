@@ -122,7 +122,7 @@ const UpdateApps = (props) => {
             setIssues("");
             setFeatures("");
         } catch (err) {
-            console.log(err);
+            console.log(err.response);
         }
     };
 

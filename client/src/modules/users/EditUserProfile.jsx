@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import p1 from "./profile.jpg";
-import { FaEdit } from "react-icons/fa";
+import Footer from "../layout/Footer";
 
 const EditUserProfile = (props) => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+
     return (
         <div>
             <div>
@@ -26,7 +31,11 @@ const EditUserProfile = (props) => {
                                         <p class="mb-0">Full Name</p>
                                     </div>
                                     <div className="col-sm-9 pt-2">
-                                        <input type="text" />
+                                        <input type="text"
+                                            value={name}
+                                            onChange={e => setName(e.target.value)}
+
+                                        />
                                     </div>
                                 </div>
 
@@ -35,7 +44,10 @@ const EditUserProfile = (props) => {
                                         <p class="mb-0">Email</p>
                                     </div>
                                     <div className="col-sm-9">
-                                        <input type="text" />
+                                        <input type="text"
+                                            value={email}
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
                                     </div>
                                 </div>
 
@@ -44,7 +56,38 @@ const EditUserProfile = (props) => {
                                         <p class="mb-0">Phone</p>
                                     </div>
                                     <div className="col-sm-9">
-                                        <input type="text" />
+                                        <input type="text"
+                                            value={phone}
+                                            onChange={e => setPhone(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+
+                                <div className="row mt-3">
+                                    <div className="col-sm-3">
+                                        <p class="mb-0">Password</p>
+                                    </div>
+                                    <div className="col-sm-9">
+                                        <input type="text"
+
+                                            value={address}
+                                            onChange={e => setAddress(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row mt-3">
+                                    <div className="col-sm-3">
+                                        <p class="mb-0">Licence Photo
+
+                                        </p>
+                                    </div>
+                                    <div className="col-sm-9">
+                                        <input type="file"
+
+                                            value={address}
+                                            onChange={e => address(e.target.value)}
+                                        />
                                     </div>
                                 </div>
 
@@ -61,11 +104,22 @@ const EditUserProfile = (props) => {
                                     </div>
                                 </div>
 
+
+                                <div className="row mt-3">
+                                    <div className="col-sm-3">
+                                        <Link to="/change-password">Change Password</Link>
+                                    </div>
+                                    <div className="col-sm-9 ">
+
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

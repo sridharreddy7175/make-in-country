@@ -7,8 +7,9 @@ const fs = require("fs");
 
 exports.getAppById = (req, res, next, id) => {
     db.App.findById(id)
-        // .populate("category")
+        .populate("category")
         .exec((err, app) => {
+            // console.log("app", app)
             if (err) {
                 return res.status(400).json({
                     error: "App not found",
@@ -102,9 +103,45 @@ exports.deleteApp = (req, res) => {
     });
 };
 
-// delete controllers
+// Update controllers
 exports.updateApp = (req, res) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
 
+    form.parse(req, (err, fields, file) => {
+        if (err) {
+            return res.status(400).json({
+                error: "problem with image",
+            });
+        }
+
+        //updation code
+
+        let app = req.app;
+        app = _.extend(app, fields);
+
+        //handle file here
+        if (file.photo) {
+            if (file.photo.size > 3000000) {
+                return res.status(400).json({
+                    error: "File size too big!",
+                });
+            }
+            app.photo.data = fs.readFileSync(file.photo.path);
+            app.photo.contentType = file.photo.type;
+        }
+        // console.log(app);
+
+        app.save((err, app) => {
+            // console.log("app", app)
+            if (err) {
+                res.status(400).json({
+                    error: "Saving app in DB failed",
+                });
+            }
+            res.json(app);
+        });
+    });
 };
 
 

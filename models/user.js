@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String
     },
+    photo: {
+        data: Buffer,
+        contentType: String,
+    },
     isAdmin: { type: Boolean, default: false },
 
 }, { timestamps: true });

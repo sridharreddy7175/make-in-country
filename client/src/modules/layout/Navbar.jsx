@@ -7,7 +7,7 @@ const Navbar = (props) => {
     const history = useHistory();
     const signout = () => {
         props.signoutUser();
-        history.push("/");
+        history.push("/signin");
     };
     return (
         <div>
@@ -78,7 +78,7 @@ const Navbar = (props) => {
                                 <li className="nav-item">
                                     <Link
                                         className="nav-link text-white"
-                                        to="/signup"
+                                        to="/signin"
                                         onClick={signout}
                                     >
                                         SignOut
@@ -103,8 +103,8 @@ const Navbar = (props) => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link text-white" to="/signup">
-                                        Signup
+                                    <Link className="nav-link text-white" to="/signin">
+                                        Signin
                                     </Link>
                                 </li>
 

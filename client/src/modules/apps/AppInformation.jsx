@@ -5,6 +5,7 @@ import { AiFillStar } from "react-icons/ai";
 import { BsFillHandbagFill } from "react-icons/bs";
 import OtherApps from "./OtherApps";
 import Footer from "../layout/Footer";
+import Alternateapps from "./Alternateapps";
 
 const AppInformation = () => {
     const { id } = useParams();
@@ -30,7 +31,7 @@ const AppInformation = () => {
         try {
             var resProducts = await fetch(`/api/app/${id}`);
             var response = await resProducts.json();
-            console.log("response", response);
+            console.log("response", response.category);
             setName(response?.name);
             setSize(response?.size);
             setPhoto(response?.photo);
@@ -193,6 +194,7 @@ const AppInformation = () => {
                     </div>
                 </div>
             </div>
+            <Alternateapps category={category} />
             <OtherApps />
             <Footer />
         </div>
